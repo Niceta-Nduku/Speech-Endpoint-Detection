@@ -1,0 +1,2 @@
+function auto = STA(data)
+
