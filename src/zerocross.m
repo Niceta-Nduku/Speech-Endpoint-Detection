@@ -1,11 +1,20 @@
-function [ZCR]= zerocross(frames)
+function [ZCR,zcr_wave]= zerocross(frames)
     %zcd = dsp.ZeroCrossingDetector;
     %ZCR = zcd(data);
-    [numOfFrames,~,] = size(data);
-    ZCR=zeros(1,numOfFrames);
+    [numOfFrames,sizeOfFrame] = size(frames);
+       
+    ZCRf=zeros(1,numOfFrames);
 
     for i = 1:numOfFrames
-        x = frames(i);
-        ZCR(i) = 0.5*sum(abs(sign(x(2:end))-sign(x(1:end-1))));
+        f = frames(i,:);
+        ZCRf(i) = sum(f(1 : end - 1) .* f(2:end) <= 0);
     end
- 
+    
+    % calculating rate
+    ZCR = ZCRf/length(f);
+    ZCR = ZCR./max(ZCR);
+    zcr_wave = 0;
+    for j = 1 : length(ZCR)
+        l = length(zcr_wave);
+        zcr_wave(l : l + sizeOfFrame) = ZCR(j);
+    end

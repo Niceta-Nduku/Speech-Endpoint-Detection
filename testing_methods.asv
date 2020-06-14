@@ -1,29 +1,49 @@
-[data,fs] = audioread('sf1_cln.wav');
+[data,fs] = audioread('data/sf1_cln.wav');
 
+%listen to the sound
 sound(data,fs);
-plot(data)
+
 %normalize data 
 data = data / abs(max(data));
 
-%remove noise
+%plot the raw data
+plot(data)
+
+%remove noise and dc component
 
 %frame and window- function created
 [windows,frames] = framing(data,fs,0.025); %between 20 to 30 ms;
 
-%pre-emphasis filter -done
-
-%VAD - voiced,unvoiced,silence detection
 [numOfFrames,sizeOfFrame] =  size(frames);
-%1. ZCR
+% %pre-emphasis filter 
 
-%TODO: decide on a threshold statistically;
-%2. STE
+% %VAD - voiced,unvoiced,silence detection
 
-%3. Entropy - in built matlab function
-%https://www.mathworks.com/help/signal/ref/pentropy.html#d120e105175
-%https://www.mathworks.com/help/audio/ref/spectralentropy.html#namevaluepairarguments
+% %1. ZCR
+% 
+% %TODO: decide on a threshold statistically;
+% %2. STE
+ste = STE(frames);
 
-%4. autocorrelation
+f_size = round(f_d * fs);
+ste_wave = 0;
+for j = 1 : length(ste)
+    l = length(ste_wave);
+    ste_wave(l : l + sizeOfFrame) = ste(j);
+end
+
+t = [0 : 1/fs : length(data)/fs]; % time in sec
+t = t(1:end - 1);
+t1 = [0 : 1/fs : length(ste_wave)/fs];
+t1 = t1(1:end - 1);
+plot(t,data'); hold on;
+plot(t1,ste_wave,'r','LineWidth',2);
+legend('Speech Signal','Short Term Energy (Frame Energy)');
+% %3. Entropy - in built matlab function
+% %https://www.mathworks.com/help/signal/ref/pentropy.html#d120e105175
+% %https://www.mathworks.com/help/audio/ref/spectralentropy.html#namevaluepairarguments
+% 
+% %4. autocorrelation
 
 %5. adaptive Filter
 
