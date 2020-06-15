@@ -3,15 +3,17 @@ function [ZCR,zcr_wave]= zerocross(frames)
     %ZCR = zcd(data);
     [numOfFrames,sizeOfFrame] = size(frames);
        
-    ZCRf=zeros(1,numOfFrames);
-
+    ZCR=zeros(1,numOfFrames);
+    
     for i = 1:numOfFrames
         f = frames(i,:);
-        ZCRf(i) = sum(f(1 : end - 1) .* f(2:end) <= 0);
+        f2 = zeros(size(f));
+        f2(2:end) = f(1 : end - 1);
+        ZCR(i) = (1/(2*length(f)))*sum(abs(sign(f)-sign(f2)));
+%         ZCR(i) = (1/(2*length(f)))*sum(f(1 : end - 1) .* f(2:end) <= 0);
     end
     
     % calculating rate
-    ZCR = ZCRf/length(f);
     ZCR = ZCR./max(ZCR);
     zcr_wave = 0;
     for j = 1 : length(ZCR)

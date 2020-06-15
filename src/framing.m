@@ -1,4 +1,4 @@
-function [f_windows,frames] = framing(data,fs,frame_duration)
+function [f_windows,frames,w_FFT] = framing(data,fs,frame_duration)
      
     frame_size = round(fs * frame_duration);
     
@@ -11,11 +11,14 @@ function [f_windows,frames] = framing(data,fs,frame_duration)
     
     f_windows=zeros(num_Frames,frame_size+1);
     
+    w_FFT=zeros(num_Frames,frame_size+1);
+    
     start = 1;
     for i= 1:num_Frames
         %TODO: allow for overlap of 30%-50%
         frames(i,:) = data(start:start+frame_size);    
         f_windows(i,:) = data(start:start+frame_size) .* hamming(frame_size+1);
+        w_FFT(i,:)= getDFT(f_windows(i,:),fs);
         start = start + frame_size;
     end
     %to change and see what window will be best

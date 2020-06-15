@@ -12,26 +12,34 @@ data = data / abs(max(data));
 
 %remove noise and dc component
 
+% %pre-emphasis filter 
+
+
 %frame and window- function created
-[windows,frames] = framing(data,fs,0.025); %between 20 to 30 ms;
+[windows,frames,w_FFTS] = framing(data,fs,0.025); %between 20 to 30 ms;
 
 [numOfFrames,sizeOfFrame] =  size(frames);
-% %pre-emphasis filter 
+
 
 % %VAD - voiced,unvoiced,silence detection
 
 % %1. ZCR
 [ZCR,zcr_wave]= zerocross(frames);
 
-% %TODO: decide on a threshold statistically;
 % %2. STE
 [ste,ste_wave] = STE(frames);
 
 % %3. Entropy - in built matlab function
 % https://www.mathworks.com/help/signal/ref/pentropy.html#d120e105175
 % https://www.mathworks.com/help/audio/ref/spectralentropy.html#namevaluepairarguments
-% 
+% entropy = spectralEntropy(data,fs,'Window',hamming(size(data,1)),'OverlapLength',0);
+
+for i = 1 : numOfFrames
+   w = w_FFTS(i,:);
+   feature_spectral_entropy(w, 10);
+end
 % %4. autocorrelation
+[stacf,stacf_wave] = STACF(frames); %see no reason for this as it is the same as STE
 
 %5. adaptive Filter
 
