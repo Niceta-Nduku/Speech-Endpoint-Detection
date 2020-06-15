@@ -18,6 +18,6 @@ t = t(1:end - 1);
 t1 = [0 : 1/fs : length(ste_wave)/fs];
 t1 = t1(1:end - 1);
 
-plot(t,data'); hold on;
-plot(t1,ste_wave,'r','LineWidth',2);
+% plot(t,data'); hold on;
+plot(t1,ste_wave,'g','LineWidth',2);
 legend('Speech Signal','Short Term Energy (Frame Energy)');
