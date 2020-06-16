@@ -1,3 +1,21 @@
+function [entropy, entropy_wave] = getEntropy(framesFFT)
+
+[numOfFrames,sizeOfFrame] =  size(framesFFT);
+
+entropy = zeros (numOfFrames);
+
+for i = 1 : numOfFrames
+    windowFFT= framesFFT(i,:);
+   entropy(i) = feature_spectral_entropy(windowFFT, 10);
+end
+    entropy = entropy./max(entropy);
+    
+    entropy_wave = 0;    
+    for j = 1 : length(entropy)
+        l = length(entropy_wave);
+        entropy_wave(l : l + sizeOfFrame) = entropy(j);
+    end
+
 function En = feature_spectral_entropy(windowFFT, numOfShortBlocks)
 
 % function En = feature_spectral_entropy(windowFFT, numOfShortBlocks)
@@ -13,6 +31,7 @@ function En = feature_spectral_entropy(windowFFT, numOfShortBlocks)
 % RETURNS:
 % - En:              the value of the spectral entropy
 %
+% (c) 2014 T. Giannakopoulos, A. Pikrakis
 
 % number of DFT coefs
 fftLength = length(windowFFT);
