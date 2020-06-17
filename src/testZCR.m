@@ -16,4 +16,5 @@ t1 = [0 : 1/fs : length(zcr_wave)/fs];
 t1 = t1(1:end - 1);
 
 plot(t,data'); hold on;
-plot(t1,zcr_wave,'r','LineWidth',2);
+plot(t1,zcr_wave,'k','LineWidth',1);
+yline(0.145,'LineWidth',2)

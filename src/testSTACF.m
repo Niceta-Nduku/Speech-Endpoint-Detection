@@ -15,5 +15,5 @@ t1 = [0 : 1/fs : length(stacf_wave)/fs];
 t1 = t1(1:end - 1);
 
 % plot(t,data'); hold on;
-plot(t1,stacf_wave,'r','LineWidth',2);
-legend('Speech Signal','Short Term Auto Corr.');
+plot(t1,stacf_wave,'r','LineWidth',1);
+legend('Short Term Auto Corr.');
