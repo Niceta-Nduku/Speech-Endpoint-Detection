@@ -9,10 +9,9 @@ t = t(1:end - 1);
 
 [numOfFrames,sizeOfFrame] =  size(frames);
 
-[entropy, entropy_wave] = getEntropy(w_FFTS);
+[entropy, entropy_wave] = getEntropy(w_FFTS');
 
 plot(t,data'); hold on;
-%please note, this is not a time domain feature
 plot(t1,entropy_wave,'k','LineWidth',1);
 legend('Short Term Spectral Entropy');
 

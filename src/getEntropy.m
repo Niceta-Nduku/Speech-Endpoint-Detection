@@ -31,7 +31,6 @@ function En = feature_spectral_entropy(windowFFT, numOfShortBlocks)
 % RETURNS:
 % - En:              the value of the spectral entropy
 %
-% (c) 2014 T. Giannakopoulos, A. Pikrakis
 
 % number of DFT coefs
 fftLength = length(windowFFT);
@@ -48,7 +47,7 @@ end
 % define sub-frames:
 subWindows = reshape(windowFFT, subWinLength, numOfShortBlocks);
 
-% compute spectral sub-energies:
+% compute spectral sub-energies: %probability of sub-band energy
 s = sum(subWindows.^2) / (Eol+eps);
 
 % compute spectral entropy:
