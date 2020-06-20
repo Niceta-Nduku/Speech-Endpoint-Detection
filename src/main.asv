@@ -21,6 +21,10 @@ data = data - mean(data);
 %normalize data 
 data = data / abs(max(data));
 
+%plot the raw data
+% figure;
+% plot(t,data');
+
 % %pre-emphasis filter 
 emph_data = preEmphasis(data);
 % specgram(emph_data,1024,fs);
@@ -96,6 +100,7 @@ entropy_index = find(entropy > entropy_Thres);
 zcr_index = find(ZCR < ZCR_Thres);%has a potential issue;
 
 %TODO: come up with a way to use all the above to come up with an ideal
+
 
 % just change the index
 
