@@ -27,8 +27,8 @@ emph_data = preEmphasis(data);
 
 %frame and window- function created
 frame_length = 0.025; %play with value;
-
-[windows,frames,w_FFTS] = framing(data,fs,frame_length); %between 20 to 30 ms;
+frame_overlap = 0; % 30%  overlap
+[windows,frames,w_FFTS] = framing(data,fs,frame_length,frame_overlap); %between 20 to 30 ms;
 
 [sizeOfFrame,numOfFrames] =  size(frames);
 
@@ -52,10 +52,12 @@ frame_length = 0.025; %play with value;
 % 4. Entropy
 [entropy, entropy_wave] = getEntropy(w_FFTS');
 
+t1 = [0 : 1/fs : length(ste_wave)/fs];
+t1 = t1(1:end - 1);
 %**********************************************************************
 %% DYNAMIC THRESHOLD
 %**********************************************************************
-bin = 40; %play with value
+bin = 20; %play with value
 W = 5; %play with value
 
 [ste_M1,ste_M2] = dynamicThres(ste,bin);
@@ -74,6 +76,7 @@ plot(t,data'); hold on;
 plot(t1,ste_wave,'g','LineWidth',1);
 legend('Short Term Energy (Frame Energy)');
 yline(STE_Thres,'g','STE','LineWidth',1)
+hold off;
 
 hold on;
 plot(t1,entropy_wave,'k','LineWidth',1);
@@ -91,21 +94,20 @@ hold off;
 %**********************************************************************
 
 %find points in feature with points above thres
-ste_index = find(ste > STE_Thres);
-entropy_index = find(entropy > entropy_Thres);
+ste_index = find(ste_wave > STE_Thres);
+entropy_index = find(entropy < entropy_Thres);
 zcr_index = find(ZCR < ZCR_Thres);%has a potential issue;
 
 %TODO: come up with a way to use all the above to come up with an ideal
 
+% data_manual = using the 
+data_p = zeros(length(data),1);
+
+data_p(ste_index) = 1;
+
 % just change the index
 
-fr_ws = frames(entropy_index,:);
-% reconstruct signal
-data_r = reshape(fr_ws',1,[]);
-data_r = data_r / abs(max(data_r));
-figure;
-plot(data);hold on;
-plot(data_r,'g');
+
 
 
 

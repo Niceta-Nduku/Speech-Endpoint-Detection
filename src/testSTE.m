@@ -9,7 +9,7 @@ data = data / abs(max(data));
 t = [0 : 1/fs : length(data)/fs]; % time in sec
 t = t(1:end - 1);
 
-[windows,frames] = framing(data,fs,0.025); %between 20 to 30 ms;
+[windows,frames] = framing(data,fs,0.1,0); %between 20 to 30 ms;
 
 [ste,ste_wave] = STE(windows');
 
