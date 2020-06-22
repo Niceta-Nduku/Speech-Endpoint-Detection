@@ -19,7 +19,10 @@ end
 function En = feature_spectral_entropy(windowFFT, numOfShortBlocks)
 
 % function En = feature_spectral_entropy(windowFFT, numOfShortBlocks)
-% 
+% Theodoros Giannakopoulos
+% http://www.di.uoa.gr/~tyiannak
+%
+% (c)
 % This function computes the spectral entropy of the given audio frame
 %
 % ARGUMENTS:
