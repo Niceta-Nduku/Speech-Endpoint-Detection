@@ -1,8 +1,8 @@
-function [stacf,stacf_wave] = STACF(frames)
+function [stacf,stacf_wave] = STACF(frames,d)
 
 [numOfFrames,sizeOfFrame] = size(frames);
 
- delay = sizeOfFrame+1;
+ delay = sizeOfFrame+d;
 
  stacf = zeros(numOfFrames);
  
@@ -12,7 +12,7 @@ function [stacf,stacf_wave] = STACF(frames)
     stacf(i) = ac(delay); %for a delay of 1
  end
  
- stacf = stacf./max(stacf);
+ stacf = abs(stacf./max(stacf));
  
  stacf_wave = 0;    
  for j = 1 : length(stacf)
