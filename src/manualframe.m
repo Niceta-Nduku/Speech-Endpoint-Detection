@@ -18,7 +18,7 @@ function [manualFrame, soundEnvelope, manual_index] = manualFrame(data)
     % find the peaks
     [pks,ind] = findpeaks(U, 'MinPeakHeight', mph);
     
-    %given index of sound 
+    %  index of sound 
     manual_index = ind;
     
     manualFrame = zeros(length(data),1);
